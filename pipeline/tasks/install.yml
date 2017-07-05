@@ -8,7 +8,7 @@ image_resource:
     tag: boron
 
 inputs:
-  - name: hello-node
+  - name: source
   - name: version
 
 outputs:
