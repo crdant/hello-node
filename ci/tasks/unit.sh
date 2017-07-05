@@ -26,4 +26,5 @@ if [ ! -d "$inputDir" ]; then
 fi
 
 cd $inputDir
+npm install
 npm run test
