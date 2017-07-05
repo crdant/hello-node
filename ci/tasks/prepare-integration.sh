@@ -71,9 +71,10 @@ if [ -z "$packaging" ]; then
   error_and_exit "missing packaging!"
 fi
 
-package=`find $inputDir -name "*.{$packaging}"`
+package=`find $inputDir -name "*.${packaging}"`
 echo "Extracting application from ${package} to ${outputDir}"
 tar -C ${outputDir} -xzf ${package}
+ls ${outputDir}
 
 #Manifest
 echo "Host Name: "$hostname
