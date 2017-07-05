@@ -3,6 +3,6 @@ applications:
 - name: hello-node
   memory: 512M
   instances: 1
-  path: changeme
+  path: .
   host: changeme
   domain: changeme
