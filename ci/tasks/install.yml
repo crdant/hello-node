@@ -18,7 +18,7 @@ run:
   path: source/ci/tasks/install.sh
   args: [
     --input-dir, source,
-    --output-dir, build,
+    --output-dir, package,
     --version-file, version/number,
     --artifactId, hello-node,
     --packaging, tgz

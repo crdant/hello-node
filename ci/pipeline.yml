@@ -39,6 +39,6 @@ jobs:
       - task: install
         file: source/ci/tasks/install.yml
       - put: candidate-release
-        params: { file: package/build/hello-node-*.tgz }
+        params: { file: package/hello-node-*.tgz }
       - put: version
         params: { file: version/number }
