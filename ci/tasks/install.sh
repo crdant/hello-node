@@ -64,4 +64,5 @@ then
 fi
 
 echo Creating artifact: tar -czf $outputDir/$artifactName *.js node_modules
+find .
 tar -czf $outputDir/$artifactName *.js node_modules
