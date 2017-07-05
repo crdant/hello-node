@@ -1,6 +1,6 @@
 #!/bin/sh
 
-inputDir=  outputDir=  versionFile=  artifactId=  packaging=
+inputDir=  
 
 while [ $# -gt 0 ]; do
   case $1 in
