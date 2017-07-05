@@ -8,12 +8,12 @@ image_resource:
     tag: boron
 
 inputs:
-  - name: pcfdemo
+  - name: source
 
 run:
   path: source/ci/tasks/integration.sh
   args: [
     --input-dir, source,
     --hostname,
-    --domain, 
+    --domain,
   ]
