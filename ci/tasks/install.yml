@@ -15,7 +15,7 @@ outputs:
   - name: build
 
 run:
-  path: source/pipeline/tasks/install.sh
+  path: source/ci/tasks/install.sh
   args: [
     --input-dir, source,
     --output-dir, build,
