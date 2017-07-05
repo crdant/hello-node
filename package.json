@@ -3,7 +3,8 @@
   "description": "A simple node application for testing out a Councourse pipeline",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test/test.js",
-    "integration": "node test/integration.js"
+    "integration": "node test/integration.js",
+    "start": "node hello-node.js"
   },
   "version": "1.0.0",
   "devDependencies": {
