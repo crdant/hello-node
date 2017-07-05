@@ -71,7 +71,7 @@ jobs:
         params:
           CF_HOST: {{cf-integration-host}}
           CF_DOMAIN: {{cf-domain}}
-      - put: cf
+      - put: cf-integration
         params:
           manifest: prepare-integration/manifest.yml
       - task: integration-test
