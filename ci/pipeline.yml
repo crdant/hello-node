@@ -29,6 +29,15 @@ resources:
       endpoint: {{s3-endpoint}}
       sse-kms-key-id: {{s3-sse-kms-key-id}}
 
+  - name: cf-integration
+    type: cf
+    source:
+      api: {{cf-api}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-org}}
+      space: {{cf-integration-space}}
+      skip_cert_check: true
 
 jobs:
   - name: build
@@ -46,3 +55,23 @@ jobs:
         params: { file: package/hello-node-*.tgz }
       - put: version
         params: { file: version/number }
+
+  - name: integration-test
+    serial: true
+    plan:
+      - get: candidate-release
+        trigger: true
+        passed: [ build ]
+      - get: source
+        passed: [ build ]
+      - get: version
+        passed: [ build ]
+      - task: prepare-integration
+        file: pcfdemo/ci/tasks/prepare-integration.yml
+        params:
+          CF_MANIFEST_HOST: {{cf-manifest-integration-host}}
+      - put: cf
+        params:
+          manifest: prepare-integration/manifest.yml
+      - task: integration-test
+        file: source/ci/tasks/integration.yml
