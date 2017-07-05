@@ -19,7 +19,7 @@ outputs:
   - name: prepare-final
 
 run:
-  path: source/ci/tasks/prepare-integration.sh
+  path: source/ci/tasks/prepare.sh
   args: [
     --input-dir, candidate-release,
     --output-dir, prepare-final,
