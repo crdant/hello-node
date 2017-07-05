@@ -58,4 +58,4 @@ artifactName="${artifactId}-${version}.${packaging}"
 
 cd $inputDir
 npm install
-zip $outputDir/$artifactName *.js node_modules
+tar -czf $outputDir/$artifactName *.js node_modules

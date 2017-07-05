@@ -1,0 +1,15 @@
+application: "hello-node"
+github-uri: "https://github.com/crdant/hello-node"
+github-branch: master
+s3-region: "us-west-2"
+s3-access-key-id: AKIAJNZCYHAIZR6Q6IDA
+s3-secret-access-key: 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
+s3-sse-kms-key-id: 51c4f794-0c96-496b-a841-ac76f8e16f50
+s3-bucket-version: hello-node-releases
+s3-bucket-releases: hello-node-releases
+s3-bucket-release-candidates: hello-node-releases-candidates
+cf-api: "https://api.run.pivotal.io"
+cf-username: "cdantonio@gmail.com"
+cf-password: "ygX-cGz-3ao-wPX"
+cf-org: "hello-node"
+cf-space: "development"
