@@ -2,7 +2,8 @@
   "name": "hello-node",
   "description": "A simple node application for testing out a Councourse pipeline",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha",
+    "integration": "node test/integration.js"
   },
   "version": "1.0.0",
   "devDependencies": {

@@ -69,9 +69,13 @@ jobs:
       - task: prepare-integration
         file: pcfdemo/ci/tasks/prepare-integration.yml
         params:
-          CF_MANIFEST_HOST: {{cf-manifest-integration-host}}
+          CF_HOST: {{cf-integration-host}}
+          CF_DOMAIN: {{cf-domain}}
       - put: cf
         params:
           manifest: prepare-integration/manifest.yml
       - task: integration-test
         file: source/ci/tasks/integration.yml
+        params:
+          CF_HOST: {{cf-integration-host}}
+          CF_DOMAIN: {{cf-domain}}

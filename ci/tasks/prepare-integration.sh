@@ -9,7 +9,8 @@ inputManifest=  # optional
 packaging= # optional
 
 #
-hostname=$CF_MANIFEST_HOST # default to env variable from pipeline
+hostname=$CF_HOST # default to env variable from pipeline
+domain=$CF_DOMAIN # default to env variable from pipeline
 
 
 while [ $# -gt 0 ]; do
@@ -82,8 +83,8 @@ outputManifest=$outputDir/manifest.yml
 cp $inputManifest $outputManifest
 echo $hostname
 # the path in the manifest is always relative to the manifest itself
-sed -i -- "s|path: .*$|path: ${baseName}.war|g" $outputManifest
 sed -i "s|host: .*$|host: $hostname|g" $outputManifest
+sed -i "s|domain: .*$|domain: $domain|g" $outputManifest
 
 cat $outputManifest
 

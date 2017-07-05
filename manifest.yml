@@ -1,0 +1,7 @@
+---
+applications:
+- name: hello-node
+  memory: 512M
+  instances: 1
+  host: changeme
+  domain: changeme
