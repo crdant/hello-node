@@ -1,0 +1,44 @@
+---
+resources:
+  - name: source
+    type: git
+    source:
+      uri: {{github-uri}}
+      branch: {{github-branch}}
+
+  - name: version
+    type: semver
+    source:
+      bucket: {{s3-bucket-version}}
+      initial_version: 1.0.0-rc.0
+      key: current-version
+      access_key_id: {{s3-access-key-id}}
+      secret_access_key: {{s3-secret-access-key}}
+      region_name: {{s3-region}}
+      sse-kms-key-id: {{s3-sse-kms-key-id}}
+
+  - name: candidate-release
+    type: s3
+    source:
+      bucket: {{s3-bucket-release-candidates}}
+      regexp: hello-node-(.*).zip
+      access_key_id: {{s3-access-key-id}}
+      secret_access_key: {{s3-secret-access-key}}
+      region_name: {{s3-region}}
+      sse-kms-key-id: {{s3-sse-kms-key-id}}
+
+
+jobs:
+  - name: dependencies
+    serial_groups: [ version ]
+    plan:
+      - get: source
+        trigger: true
+      - get: version
+        params: { pre: rc }
+      - task: install
+        file: hello-node/ci/tasks/install.yml
+      - put: candidate-release
+        params: { file: build/hello-node-*.zip }
+      - put: version
+        params: { file: version/number }
