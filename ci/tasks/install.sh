@@ -59,7 +59,5 @@ artifactName="${artifactId}-${version}.${packaging}"
 cd $inputDir
 npm install
 
-echo Creating artifact: tar -czf $outputDir/$artifactName *.js node_modules
-tar -czf $artifactName *.js node_modules
-cp $inputDir/$artifactName $outputDir/$artifactName
-find $outputDir
+echo Creating tarball to move to S3...
+tar -czf ../$outputDir/$artifactName *.js node_modules
