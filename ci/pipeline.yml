@@ -15,21 +15,23 @@ resources:
       access_key_id: {{s3-access-key-id}}
       secret_access_key: {{s3-secret-access-key}}
       region_name: {{s3-region}}
+      endpoint: {{s3-endpoint}}
       sse-kms-key-id: {{s3-sse-kms-key-id}}
 
   - name: candidate-release
     type: s3
     source:
       bucket: {{s3-bucket-release-candidates}}
-      regexp: hello-node-(.*).zip
+      regexp: hello-node-(.*).tgz
       access_key_id: {{s3-access-key-id}}
       secret_access_key: {{s3-secret-access-key}}
       region_name: {{s3-region}}
+      endpoint: {{s3-endpoint}}
       sse-kms-key-id: {{s3-sse-kms-key-id}}
 
 
 jobs:
-  - name: dependencies
+  - name: build
     serial_groups: [ version ]
     plan:
       - get: source
@@ -38,6 +40,8 @@ jobs:
         params: { pre: rc }
       - task: install
         file: source/ci/tasks/install.yml
+      - task: unit-test
+        file: source/ci/tasks/unit.yml
       - put: candidate-release
         params: { file: package/hello-node-*.tgz }
       - put: version
