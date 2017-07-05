@@ -1,3 +1,5 @@
+#!/bin/sh
+
 inputDir=  outputDir=  versionFile=  artifactId=  packaging=
 
 while [ $# -gt 0 ]; do
