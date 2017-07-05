@@ -8,18 +8,18 @@ image_resource:
     tag: boron
 
 inputs:
-  - name: source
+  - name: people
   - name: version
 
 outputs:
   - name: build
 
 run:
-  path: {{application}}/pipeline/tasks/install.sh
+  path: hello-node/pipeline/tasks/install.sh
   args: [
-    --input-dir, {{application}},
+    --input-dir, hello-node,
     --output-dir, build,
     --version-file, version/number,
-    --artifactId, {{application}},
+    --artifactId, hello-node,
     --packaging, zip
   ]
