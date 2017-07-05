@@ -39,6 +39,17 @@ resources:
       space: {{cf-integration-space}}
       skip_cert_check: true
 
+  - name: final-release
+    type: s3
+    source:
+      bucket: {{s3-bucket-releases}}
+      regexp: hello-node-(.*).tgz
+      access_key_id: {{s3-access-key-id}}
+      secret_access_key: {{s3-secret-access-key}}
+      region_name: {{s3-region}}
+      endpoint: {{s3-endpoint}}
+      sse-kms-key-id: {{s3-sse-kms-key-id}}
+
 jobs:
   - name: build
     serial_groups: [ version ]
@@ -78,4 +89,24 @@ jobs:
         file: source/ci/tasks/integration.yml
         params:
           CF_HOST: {{cf-integration-host}}
-          CF_DOMAIN: {{cf-domain}}
+          CF_DOMAIN: {{cf-integration-domain}}
+
+  - name: ship-it
+    serial_groups: [ version ]
+    plan:
+      - get: candidate-release
+        passed: [ integration-test ]
+      - get: pcfdemo
+        passed: [ integration-test ]
+      - get: version
+        params: { bump: final }
+      - task: prepare-final
+        file: pcfdemo/ci/tasks/prepare-final.yml
+        params:
+          CF_HOST: {{cf-production-host}}
+          CF_DOMAIN: {{cf-production-domain}}
+
+      - put: final-release
+        params: { file: prepare-final/pcf-demo-*.war }
+      - put: version
+        params: { file: version/number }
