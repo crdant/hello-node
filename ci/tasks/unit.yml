@@ -1,0 +1,17 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: boron
+
+inputs:
+  - name: source
+
+run:
+  path: source/ci/tasks/unit.sh
+  args: [
+    --input-dir, source
+  ]
