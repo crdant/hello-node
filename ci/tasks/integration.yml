@@ -13,7 +13,5 @@ inputs:
 run:
   path: source/ci/tasks/integration.sh
   args: [
-    --input-dir, source,
-    --hostname,
-    --domain,
+    --input-dir, source
   ]
