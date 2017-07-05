@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: boron
+
+inputs:
+  - name: hello-node
+  - name: version
+
+outputs:
+  - name: build
+
+run:
+  path: {{application}}/pipeline/tasks/install.sh
+  args: [
+    --input-dir, {{application}},
+    --output-dir, build,
+    --version-file, version/number,
+    --artifactId, {{application}},
+    --packaging, zip
+  ]
