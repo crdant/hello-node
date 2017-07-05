@@ -12,7 +12,7 @@ inputs:
   - name: version
 
 outputs:
-  - name: build
+  - name: package
 
 run:
   path: source/ci/tasks/install.sh
