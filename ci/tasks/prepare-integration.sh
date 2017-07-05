@@ -72,10 +72,8 @@ if [ -z "$packaging" ]; then
 fi
 
 package=`find $inputDir -name "*.{$packaging}"`
-
 echo "Extracting application from ${package} to ${outputDir}"
-cd ${outputDir}
-tar -xzf ${package}
+tar -C ${outputDir} -xzf ${package}
 
 #Manifest
 echo "Host Name: "$hostname
