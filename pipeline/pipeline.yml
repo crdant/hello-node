@@ -37,7 +37,7 @@ jobs:
       - get: version
         params: { pre: rc }
       - task: install
-        file: hello-node/ci/tasks/install.yml
+        file: source/pipeline/tasks/install.yml
       - put: candidate-release
         params: { file: build/hello-node-*.zip }
       - put: version
