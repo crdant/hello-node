@@ -6,3 +6,4 @@ applications:
   path: .
   host: changeme
   domain: changeme
+  buildpack: nodejs_buildpack
