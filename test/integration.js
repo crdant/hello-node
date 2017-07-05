@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 
 if (process.argv.length <= 2) {
     console.log("Usage: " + __filename + " URL");
@@ -7,7 +7,7 @@ if (process.argv.length <= 2) {
 
 var url = process.argv[2]
 
-http.get(url, function(res) {
+https.get(url, function(res) {
   console.log("Got response: " + res.statusCode);
   var content = '';
   res.on('data', function(chunk) {
