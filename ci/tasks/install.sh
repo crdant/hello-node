@@ -63,4 +63,5 @@ then
   mkdir -p $outputDir
 fi
 
+echo Creating artifact: tar -czf $outputDir/$artifactName *.js node_modules
 tar -czf $outputDir/$artifactName *.js node_modules
