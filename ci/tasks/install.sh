@@ -60,4 +60,4 @@ cd $inputDir
 npm install
 
 echo Creating tarball...
-tar -czf ../$outputDir/$artifactName *.js node_modules
+tar -czf ../$outputDir/$artifactName *.js package.json node_modules
