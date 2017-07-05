@@ -31,4 +31,4 @@ fi
 cd $inputDir
 
 npm install
-npm run integration https://${hostname}.${domain}/
+npm run integration -- https://${hostname}.${domain}/
