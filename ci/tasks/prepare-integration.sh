@@ -80,7 +80,9 @@ echo "Host Name: "$hostname
 outputManifest=$outputDir/manifest.yml
 cp $inputManifest $outputManifest
 echo $hostname
+
 # the path in the manifest is always relative to the manifest itself
+sed -i "s|path: .*$|path: $outputDir|g" $outputManifest
 sed -i "s|host: .*$|host: $hostname|g" $outputManifest
 sed -i "s|domain: .*$|domain: $domain|g" $outputManifest
 
