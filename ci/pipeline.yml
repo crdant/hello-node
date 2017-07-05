@@ -32,10 +32,10 @@ resources:
   - name: cf-integration
     type: cf
     source:
-      api: {{cf-api}}
-      username: {{cf-username}}
-      password: {{cf-password}}
-      organization: {{cf-org}}
+      api: {{cf-integration-api}}
+      username: {{cf-integration-username}}
+      password: {{cf-integration-password}}
+      organization: {{cf-integration-org}}
       space: {{cf-integration-space}}
       skip_cert_check: true
 
@@ -49,6 +49,16 @@ resources:
       region_name: {{s3-region}}
       endpoint: {{s3-endpoint}}
       sse-kms-key-id: {{s3-sse-kms-key-id}}
+
+  - name: cf-production
+    type: cf
+    source:
+      api: {{cf-production-api}}
+      username: {{cf-production-username}}
+      password: {{cf-production-password}}
+      organization: {{cf-production-org}}
+      space: {{cf-production-space}}
+      skip_cert_check: true
 
 jobs:
   - name: build
@@ -81,7 +91,7 @@ jobs:
         file: source/ci/tasks/prepare-integration.yml
         params:
           CF_HOST: {{cf-integration-host}}
-          CF_DOMAIN: {{cf-domain}}
+          CF_DOMAIN: {{cf-integration-domain}}
       - put: cf-integration
         params:
           manifest: prepare-integration/manifest.yml
@@ -96,17 +106,21 @@ jobs:
     plan:
       - get: candidate-release
         passed: [ integration-test ]
-      - get: pcfdemo
+      - get: source
         passed: [ integration-test ]
       - get: version
         params: { bump: final }
       - task: prepare-final
-        file: pcfdemo/ci/tasks/prepare-final.yml
+        file: source/ci/tasks/prepare-final.yml
         params:
           CF_HOST: {{cf-production-host}}
           CF_DOMAIN: {{cf-production-domain}}
-
+      - task: release
+        file: source/ci/tasks/release.yml
       - put: final-release
-        params: { file: prepare-final/pcf-demo-*.war }
+        params: { file: release/hello-node-*.tgz }
+      - put: cf-production
+        params:
+          manifest: prepare-final/manifest.yml
       - put: version
         params: { file: version/number }
