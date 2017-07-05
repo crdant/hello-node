@@ -1,5 +1,11 @@
 {
   "name": "hello-node",
   "description": "A simple node application for testing out a Councourse pipeline",
-  "version": "1.0.0"
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "version": "1.0.0",
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  }
 }
