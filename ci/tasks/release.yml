@@ -1,0 +1,26 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: boron
+
+params:
+  CF_MANIFEST_HOST:
+
+inputs:
+  - name: source
+  - name: prepare-final
+  - name: version
+  
+outputs:
+  - name: release
+
+run:
+  path: source/ci/tasks/prepare.sh
+  args: [
+    --input-dir, candidate-release,
+    --output-dir, finale-release,
+  ]
