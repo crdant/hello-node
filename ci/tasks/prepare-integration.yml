@@ -11,7 +11,7 @@ params:
   CF_MANIFEST_HOST:
 
 inputs:
-  - name: pcfdemo
+  - name: source
   - name: candidate-release
   - name: version
 
