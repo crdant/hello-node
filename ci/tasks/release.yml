@@ -19,5 +19,5 @@ run:
   path: source/ci/tasks/prepare.sh
   args: [
     --input-dir, prepare-final,
-    --output-dir, finale-release,
+    --output-dir, release,
   ]
