@@ -61,5 +61,5 @@ version=`cat $versionFile`
 artifactName="${baseName}.${packaging}"
 
 echo Copying candidate tarball to release tarball...
-package=`find $inputDir -name "*.${packaging}"`
-cp  ${package} ${outputDir}/${artifactName}
+cd $inputDir
+tar -czf ../$outputDir/$artifactName *.js package.json node_modules
