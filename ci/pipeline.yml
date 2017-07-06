@@ -3,61 +3,61 @@ resources:
   - name: source
     type: git
     source:
-      uri: {{github-uri}}
-      branch: {{github-branch}}
+      uri: ((github-uri))
+      branch: ((github-branch))
 
   - name: version
     type: semver
     source:
-      bucket: {{s3-bucket-version}}
+      bucket: ((s3-bucket-version))
       initial_version: 1.0.0-rc.0
       key: current-version
-      access_key_id: {{s3-access-key-id}}
-      secret_access_key: {{s3-secret-access-key}}
-      region_name: {{s3-region}}
-      endpoint: {{s3-endpoint}}
-      sse-kms-key-id: {{s3-sse-kms-key-id}}
+      access_key_id: ((s3-access-key-id))
+      secret_access_key: ((s3-secret-access-key))
+      region_name: ((s3-region))
+      endpoint: ((s3-endpoint))
+      sse-kms-key-id: ((s3-sse-kms-key-id))
 
   - name: candidate-release
     type: s3
     source:
-      bucket: {{s3-bucket-release-candidates}}
-      regexp: hello-node-(.*).tgz
-      access_key_id: {{s3-access-key-id}}
-      secret_access_key: {{s3-secret-access-key}}
-      region_name: {{s3-region}}
-      endpoint: {{s3-endpoint}}
-      sse-kms-key-id: {{s3-sse-kms-key-id}}
+      bucket: ((s3-bucket-release-candidates))
+      regexp: ((application))-(.*).tgz
+      access_key_id: ((s3-access-key-id))
+      secret_access_key: ((s3-secret-access-key))
+      region_name: ((s3-region))
+      endpoint: ((s3-endpoint))
+      sse-kms-key-id: ((s3-sse-kms-key-id))
 
   - name: cf-integration
     type: cf
     source:
-      api: {{cf-integration-api}}
-      username: {{cf-integration-username}}
-      password: {{cf-integration-password}}
-      organization: {{cf-integration-org}}
-      space: {{cf-integration-space}}
+      api: ((cf-integration-api))
+      username: ((cf-integration-username))
+      password: ((cf-integration-password))
+      organization: ((cf-integration-org))
+      space: ((cf-integration-space))
       skip_cert_check: true
 
   - name: final-release
     type: s3
     source:
-      bucket: {{s3-bucket-releases}}
-      regexp: hello-node-(.*).tgz
-      access_key_id: {{s3-access-key-id}}
-      secret_access_key: {{s3-secret-access-key}}
-      region_name: {{s3-region}}
-      endpoint: {{s3-endpoint}}
-      sse-kms-key-id: {{s3-sse-kms-key-id}}
+      bucket: ((s3-bucket-releases))
+      regexp: ((application))-(.*).tgz
+      access_key_id: ((s3-access-key-id))
+      secret_access_key: ((s3-secret-access-key))
+      region_name: ((s3-region))
+      endpoint: ((s3-endpoint))
+      sse-kms-key-id: ((s3-sse-kms-key-id))
 
   - name: cf-production
     type: cf
     source:
-      api: {{cf-production-api}}
-      username: {{cf-production-username}}
-      password: {{cf-production-password}}
-      organization: {{cf-production-org}}
-      space: {{cf-production-space}}
+      api: ((cf-production-api))
+      username: ((cf-production-username))
+      password: ((cf-production-password))
+      organization: ((cf-production-org))
+      space: ((cf-production-space))
       skip_cert_check: true
 
 jobs:
@@ -73,7 +73,7 @@ jobs:
       - task: unit-test
         file: source/ci/tasks/unit.yml
       - put: candidate-release
-        params: { file: package/hello-node-*.tgz }
+        params: { file: package/((application))-*.tgz }
       - put: version
         params: { file: version/number }
 
@@ -90,16 +90,16 @@ jobs:
       - task: prepare-integration
         file: source/ci/tasks/prepare-integration.yml
         params:
-          CF_HOST: {{cf-integration-host}}
-          CF_DOMAIN: {{cf-integration-domain}}
+          CF_HOST: ((cf-integration-host))
+          CF_DOMAIN: ((cf-integration-domain))
       - put: cf-integration
         params:
           manifest: prepare-integration/manifest.yml
       - task: integration-test
         file: source/ci/tasks/integration.yml
         params:
-          CF_HOST: {{cf-integration-host}}
-          CF_DOMAIN: {{cf-integration-domain}}
+          CF_HOST: ((cf-integration-host))
+          CF_DOMAIN: ((cf-integration-domain))
 
   - name: ship-it
     serial_groups: [ version ]
@@ -113,12 +113,12 @@ jobs:
       - task: prepare-final
         file: source/ci/tasks/prepare-final.yml
         params:
-          CF_HOST: {{cf-production-host}}
-          CF_DOMAIN: {{cf-production-domain}}
+          CF_HOST: ((cf-production-host))
+          CF_DOMAIN: ((cf-production-domain))
       - task: release
         file: source/ci/tasks/release.yml
       - put: final-release
-        params: { file: release/hello-node-*.tgz }
+        params: { file: release/((application))-*.tgz }
       - put: cf-production
         params:
           manifest: prepare-final/manifest.yml
