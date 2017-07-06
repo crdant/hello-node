@@ -7,20 +7,17 @@ image_resource:
     repository: node
     tag: boron
 
-params:
-  CF_MANIFEST_HOST:
-
 inputs:
   - name: source
   - name: prepare-final
   - name: version
-  
+
 outputs:
   - name: release
 
 run:
   path: source/ci/tasks/prepare.sh
   args: [
-    --input-dir, candidate-release,
+    --input-dir, prepare-final,
     --output-dir, finale-release,
   ]
