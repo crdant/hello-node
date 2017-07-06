@@ -1,6 +1,7 @@
 #!/bin/sh
 
-inputDir=  outputDir=
+baseName="hello-node"
+inputDir=  outputDir= versionFile= packaging=
 
 while [ $# -gt 0 ]; do
   case $1 in
@@ -10,6 +11,14 @@ while [ $# -gt 0 ]; do
       ;;
     -o | --output-dir )
       outputDir=$2
+      shift
+      ;;
+    -v | --version-file )
+      versionFile=$2
+      shift
+      ;;
+    -p | --packaging )
+      packaging=$2
       shift
       ;;
     * )
@@ -25,15 +34,21 @@ error_and_exit() {
   exit 1
 }
 
-if [ ! -d "$inputDir" ]; then
-  error_and_exit "missing input directory: $inputDir"
+if [ ! -f "$versionFile" ]; then
+  error_and_exit "missing version file: $versionFile"
 fi
-if [ ! -d "$outputDir" ]; then
-  error_and_exit "missing output directory: $outputDir"
+
+if [ -f "$versionFile" ]; then
+  version=`cat $versionFile`
+  baseName="${baseName}-${version}"
+fi
+
+if [ -z "$packaging" ]; then
+  error_and_exit "missing packaging!"
 fi
 
 version=`cat $versionFile`
-artifactName="${artifactId}-${version}.${packaging}"
+artifactName="${baseName}.${packaging}"
 
 echo Copying candidate tarball to release tarball...
 package=`find $inputDir -name "*.${packaging}"`

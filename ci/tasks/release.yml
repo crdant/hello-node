@@ -19,5 +19,6 @@ run:
   path: source/ci/tasks/release.sh
   args: [
     --input-dir, prepare-final,
-    --output-dir, release
+    --output-dir, release,
+    --version-file, version/number
   ]
