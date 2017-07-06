@@ -16,7 +16,7 @@ outputs:
   - name: release
 
 run:
-  path: source/ci/tasks/prepare.sh
+  path: source/ci/tasks/release.sh
   args: [
     --input-dir, prepare-final,
     --output-dir, release,
