@@ -20,5 +20,6 @@ run:
   args: [
     --input-dir, prepare-final,
     --output-dir, release,
-    --version-file, version/number
+    --version-file, version/number,
+    --packaging, tgz
   ]
