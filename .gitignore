@@ -1,3 +1,6 @@
+# credentials file
+credentials.yml
+
 # Logs
 logs
 *.log
