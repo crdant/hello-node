@@ -34,6 +34,16 @@ error_and_exit() {
   exit 1
 }
 
+if [ ! -d "$inputDir" ]; then
+  echo "missing input directory!"
+  exit 1
+fi
+
+if [ ! -d "$outputDir" ]; then
+  echo "missing output directory!"
+  exit 1
+fi
+
 if [ ! -f "$versionFile" ]; then
   error_and_exit "missing version file: $versionFile"
 fi
@@ -52,4 +62,4 @@ artifactName="${baseName}.${packaging}"
 
 echo Copying candidate tarball to release tarball...
 package=`find $inputDir -name "*.${packaging}"`
-cp  ${package} $outputDir
+cp  ${package} ${outputDir}/${artifactName}
