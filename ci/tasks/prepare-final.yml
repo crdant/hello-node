@@ -23,7 +23,6 @@ run:
   args: [
     --input-dir, candidate-release,
     --output-dir, prepare-final,
-    --version-file, version/number,
     --input-manifest, source/manifest.yml,
     --packaging, tgz
   ]

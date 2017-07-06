@@ -4,7 +4,6 @@ baseName="hello-node"
 
 inputDir=     # required
 outputDir=    # required
-versionFile=  # optional
 inputManifest=  # optional
 packaging= # optional
 
@@ -21,10 +20,6 @@ while [ $# -gt 0 ]; do
       ;;
     -o | --output-dir )
       outputDir=$2
-      shift
-      ;;
-    -v | --version-file )
-      versionFile=$2
       shift
       ;;
     -f | --input-manifest )
@@ -51,16 +46,6 @@ fi
 if [ ! -d "$outputDir" ]; then
   echo "missing output directory!"
   exit 1
-fi
-
-
-if [ ! -f "$versionFile" ]; then
-  error_and_exit "missing version file: $versionFile"
-fi
-
-if [ -f "$versionFile" ]; then
-  version=`cat $versionFile`
-  baseName="${baseName}-${version}"
 fi
 
 if [ ! -f "$inputManifest" ]; then
