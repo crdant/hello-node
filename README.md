@@ -18,18 +18,20 @@ Foundry.
 
 Here are a few things you'll need:
 
-- GitHub Account (always free and you *should* already have one!)
-- Concourse (see [Concourse Setup](http://concourse.ci/vagrant.html) to run locally)
-- [Amazon S3](https://aws.amazon.com/s3) compatible storage (use the real thing or try [fake-s3](https://hub.docker.com/r/lphoward/fake-s3/) to run locally)
-- Cloud Foundry (see [Pivotal Web Services](http://run.pivotal.io/) for a free 60
-day trial, or [PCF Dev](http://pivotal.io/pcf-dev) to run locally)
+- GitHub Account (always free and you *should* already have one!) Concourse (see
+- [Concourse Setup](http://concourse.ci/vagrant.html) to run locally) [Amazon
+- S3](https://aws.amazon.com/s3) compatible storage (use the real thing or try
+- [fake-s3](https://hub.docker.com/r/lphoward/fake-s3/) to run locally) Cloud
+- Foundry (see [Pivotal Web Services](http://run.pivotal.io/) for a free 60 day
+- trial, or [PCF Dev](http://pivotal.io/pcf-dev) to run locally)
 
 ## Concourse Setup
 
 If you have an existing Concourse CI system setup, skip to the next section.
 
-> NOTE: The pipeline and scripts used in this project have been tested on Concourse
-**v1.2.0**.  If you experience any problems, please ensure you are running a current version of Concourse, and remember to `fly -t (alias) sync` !
+> NOTE: The pipeline and scripts used in this project have been tested on
+Concourse **v3.3.0**.  If you experience any problems, please ensure you are
+running a current version of Concourse, and remember to `fly -t (alias) sync` !
 
 Otherwise if you just want to quickly start up Concourse on your local machine you
 can use the pre-built [Vagrant](https://www.vagrantup.com/) box:
