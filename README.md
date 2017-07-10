@@ -19,11 +19,9 @@ Foundry.
 Here are a few things you'll need:
 
 - GitHub Account (always free and you *should* already have one!) Concourse (see
-- [Concourse Setup](http://concourse.ci/vagrant.html) to run locally) [Amazon
-- S3](https://aws.amazon.com/s3) compatible storage (use the real thing or try
-- [fake-s3](https://hub.docker.com/r/lphoward/fake-s3/) to run locally) Cloud
-- Foundry (see [Pivotal Web Services](http://run.pivotal.io/) for a free 60 day
-- trial, or [PCF Dev](http://pivotal.io/pcf-dev) to run locally)
+- [Concourse Setup](http://concourse.ci/vagrant.html) to run locally)
+- [Amazon S3](https://aws.amazon.com/s3) compatible storage (use the real thing or try [fake-s3](https://hub.docker.com/r/lphoward/fake-s3/) to run locally)   
+- Cloud Foundry (see [Pivotal Web Services](http://run.pivotal.io/) for a free 60 day trial, or [PCF Dev](http://pivotal.io/pcf-dev) to run locally)
 
 ## Concourse Setup
 
