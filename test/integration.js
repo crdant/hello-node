@@ -12,7 +12,7 @@ var url = process.argv[2]
 const agent = new https.Agent({
   rejectUnauthorized: false
 });
-var config = { proxy: { host: "http.proxy.fmr.com", port: 8000 }, httpsAgent: agent}
+var config = { httpsAgent: agent}
 
 axios.get(url, config)
   .then(function (response) {
