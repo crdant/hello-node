@@ -6,8 +6,9 @@ if (process.argv.length <= 2) {
 }
 
 var url = process.argv[2]
+var config = { proxy: { host: "http.proxy.fmr.com", port: 8000 } }
 
-axios.get(url)
+axios.get(url, config)
   .then(function (response) {
     console.log("Got response: " + response.status);
     console.log("Got data: " + response.data);
