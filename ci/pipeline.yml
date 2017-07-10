@@ -102,7 +102,7 @@ resources:
       password: ((cf-integration-password))
       organization: ((cf-integration-org))
       space: ((cf-integration-space))
-      skip_cert_check: true
+      skip_cert_check: ((cf-integration-skip-cert))
 
   - name: final-release
     type: s3
@@ -123,4 +123,4 @@ resources:
       password: ((cf-production-password))
       organization: ((cf-production-org))
       space: ((cf-production-space))
-      skip_cert_check: true
+      skip_cert_check: ((cf-production-skip-cert))
