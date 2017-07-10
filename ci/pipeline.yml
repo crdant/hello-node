@@ -1,65 +1,4 @@
 ---
-resources:
-  - name: source
-    type: git
-    source:
-      uri: ((github-uri))
-      branch: ((github-branch))
-
-  - name: version
-    type: semver
-    source:
-      bucket: ((s3-bucket-version))
-      initial_version: 1.0.0-rc.0
-      key: current-version
-      access_key_id: ((s3-access-key-id))
-      secret_access_key: ((s3-secret-access-key))
-      region_name: ((s3-region))
-      endpoint: ((s3-endpoint))
-      sse-kms-key-id: ((s3-sse-kms-key-id))
-
-  - name: candidate-release
-    type: s3
-    source:
-      bucket: ((s3-bucket-release-candidates))
-      regexp: ((application))-(.*).tgz
-      access_key_id: ((s3-access-key-id))
-      secret_access_key: ((s3-secret-access-key))
-      region_name: ((s3-region))
-      endpoint: ((s3-endpoint))
-      sse-kms-key-id: ((s3-sse-kms-key-id))
-
-  - name: cf-integration
-    type: cf
-    source:
-      api: ((cf-integration-api))
-      username: ((cf-integration-username))
-      password: ((cf-integration-password))
-      organization: ((cf-integration-org))
-      space: ((cf-integration-space))
-      skip_cert_check: true
-
-  - name: final-release
-    type: s3
-    source:
-      bucket: ((s3-bucket-releases))
-      regexp: ((application))-(.*).tgz
-      access_key_id: ((s3-access-key-id))
-      secret_access_key: ((s3-secret-access-key))
-      region_name: ((s3-region))
-      endpoint: ((s3-endpoint))
-      sse-kms-key-id: ((s3-sse-kms-key-id))
-
-  - name: cf-production
-    type: cf
-    source:
-      api: ((cf-production-api))
-      username: ((cf-production-username))
-      password: ((cf-production-password))
-      organization: ((cf-production-org))
-      space: ((cf-production-space))
-      skip_cert_check: true
-
 jobs:
   - name: build
     serial_groups: [ version ]
@@ -124,3 +63,64 @@ jobs:
           manifest: prepare-final/manifest.yml
       - put: version
         params: { file: version/number }
+
+resources:
+  - name: source
+    type: git
+    source:
+      uri: ((github-uri))
+      branch: ((github-branch))
+
+  - name: version
+    type: semver
+    source:
+      bucket: ((s3-bucket-version))
+      initial_version: 1.0.0-rc.0
+      key: current-version
+      access_key_id: ((s3-access-key-id))
+      secret_access_key: ((s3-secret-access-key))
+      region_name: ((s3-region))
+      endpoint: ((s3-endpoint))
+      sse-kms-key-id: ((s3-sse-kms-key-id))
+
+  - name: candidate-release
+    type: s3
+    source:
+      bucket: ((s3-bucket-release-candidates))
+      regexp: ((application))-(.*).tgz
+      access_key_id: ((s3-access-key-id))
+      secret_access_key: ((s3-secret-access-key))
+      region_name: ((s3-region))
+      endpoint: ((s3-endpoint))
+      sse-kms-key-id: ((s3-sse-kms-key-id))
+
+  - name: cf-integration
+    type: cf
+    source:
+      api: ((cf-integration-api))
+      username: ((cf-integration-username))
+      password: ((cf-integration-password))
+      organization: ((cf-integration-org))
+      space: ((cf-integration-space))
+      skip_cert_check: true
+
+  - name: final-release
+    type: s3
+    source:
+      bucket: ((s3-bucket-releases))
+      regexp: ((application))-(.*).tgz
+      access_key_id: ((s3-access-key-id))
+      secret_access_key: ((s3-secret-access-key))
+      region_name: ((s3-region))
+      endpoint: ((s3-endpoint))
+      sse-kms-key-id: ((s3-sse-kms-key-id))
+
+  - name: cf-production
+    type: cf
+    source:
+      api: ((cf-production-api))
+      username: ((cf-production-username))
+      password: ((cf-production-password))
+      organization: ((cf-production-org))
+      space: ((cf-production-space))
+      skip_cert_check: true
