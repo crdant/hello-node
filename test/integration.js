@@ -9,12 +9,8 @@ if (process.argv.length <= 2) {
 var url = process.argv[2]
 
 // At request level
-const agent = new https.Agent({
-  rejectUnauthorized: false
-});
-var config = { httpsAgent: agent}
-
-axios.get(url, config)
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+axios.get(url)
   .then(function (response) {
     console.log("Got response: " + response.status);
     console.log("Got data: " + response.data);
