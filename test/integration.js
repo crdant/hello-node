@@ -1,4 +1,5 @@
 var axios = require('axios');
+var https = require('https');
 
 if (process.argv.length <= 2) {
     console.log("Usage: " + __filename + " URL");
