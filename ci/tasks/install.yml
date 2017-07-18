@@ -20,7 +20,7 @@ run:
   args: [
     --input-dir, source,
     --output-dir, package,
-    --module-cache, node-modules
+    --module-cache, node-modules,
     --version-file, version/number,
     --artifactId, hello-node,
     --packaging, tgz

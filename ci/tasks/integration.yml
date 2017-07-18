@@ -14,6 +14,6 @@ inputs:
 run:
   path: source/ci/tasks/integration.sh
   args: [
-    --input-dir, source
+    --input-dir, source,
     --module-cache, node-modules
   ]
