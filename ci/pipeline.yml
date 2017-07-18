@@ -82,6 +82,7 @@ resources:
       <<: *app-source
       paths:
         - package.json
+        - .npmrc
 
   - name: version
     type: semver
