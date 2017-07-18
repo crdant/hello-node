@@ -12,7 +12,7 @@ while [ $# -gt 0 ]; do
       outputDir=$2
       shift
       ;;
-      -m | --module-cache )
+    -m | --module-cache )
         moduleCache=$2
         shift
       ;;
@@ -46,6 +46,9 @@ if [ ! -d "$inputDir" ]; then
 fi
 if [ ! -d "$outputDir" ]; then
   error_and_exit "missing output directory: $outputDir"
+fi
+if [ ! -d "$moduleCache" ]; then
+  error_and_exit "missing module cache directory: $moduleCache"
 fi
 if [ ! -f "$versionFile" ]; then
   error_and_exit "missing version file: $versionFile"

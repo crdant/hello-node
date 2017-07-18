@@ -9,9 +9,12 @@ image_resource:
 
 inputs:
   - name: source
+  - name: node-modules
+
 
 run:
   path: source/ci/tasks/unit.sh
   args: [
-    --input-dir, source
+    --input-dir, source,
+    --module-cache, node-modules
   ]
