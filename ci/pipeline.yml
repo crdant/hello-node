@@ -5,6 +5,7 @@ jobs:
     plan:
       - get: source
         trigger: true
+      - get: node-modules
       - get: version
         params: { pre: rc }
       - task: unit-test
@@ -23,6 +24,8 @@ jobs:
         trigger: true
         passed: [ build ]
       - get: source
+        passed: [ build ]
+      - get: node-modules
         passed: [ build ]
       - get: version
         passed: [ build ]
@@ -47,6 +50,8 @@ jobs:
         passed: [ integration-test ]
       - get: source
         passed: [ integration-test ]
+      - get: node-modules
+        passed: [ integration-test ]
       - get: version
         params: { bump: final }
       - task: prepare-final
@@ -67,9 +72,16 @@ jobs:
 resources:
   - name: source
     type: git
-    source:
+    source: &app-source
       uri: ((github-uri))
       branch: ((github-branch))
+
+  - name: node-modules
+    type: npm-cache
+    source:
+      <<: *app-source
+      paths:
+        - package.json
 
   - name: version
     type: semver
@@ -124,3 +136,10 @@ resources:
       organization: ((cf-production-org))
       space: ((cf-production-space))
       skip_cert_check: ((cf-production-skip-cert))
+
+resource_types:
+  - name: npm-cache
+    type: docker-image
+    source:
+      repository: ymedlop/npm-cache-resource
+      tag: latest
