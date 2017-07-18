@@ -9,6 +9,7 @@ image_resource:
 
 inputs:
   - name: source
+  - name: node-modules
   - name: version
 
 outputs:
@@ -19,6 +20,7 @@ run:
   args: [
     --input-dir, source,
     --output-dir, package,
+    --module-cache, node-modules
     --version-file, version/number,
     --artifactId, hello-node,
     --packaging, tgz

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-inputDir=  outputDir=  versionFile=  artifactId=  packaging=
+inputDir=  outputDir=  moduleCache= versionFile=  artifactId=  packaging=
 
 while [ $# -gt 0 ]; do
   case $1 in
@@ -11,6 +11,10 @@ while [ $# -gt 0 ]; do
     -o | --output-dir )
       outputDir=$2
       shift
+      ;;
+      -m | --module-cache )
+        moduleCache=$2
+        shift
       ;;
     -v | --version-file )
       versionFile=$2
@@ -57,7 +61,7 @@ version=`cat $versionFile`
 artifactName="${artifactId}-${version}.${packaging}"
 
 cd $inputDir
-npm install
+mv ${moduleCache}/node_modules .
 
 echo Creating tarball...
 tar -czf ../$outputDir/$artifactName *.js package.json node_modules
