@@ -9,9 +9,11 @@ image_resource:
 
 inputs:
   - name: source
+  - name: node-modules
 
 run:
   path: source/ci/tasks/integration.sh
   args: [
     --input-dir, source
+    --module-cache, node-modules
   ]
