@@ -143,4 +143,3 @@ resource_types:
     type: docker-image
     source:
       repository: ymedlop/npm-cache-resource
-      tag: latest
