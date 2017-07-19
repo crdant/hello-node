@@ -35,6 +35,7 @@ if [ ! -d "$moduleCache" ]; then
   error_and_exit "missing module cache directory: $moduleCache"
 fi
 
-cd $inputDir
 mv ${moduleCache}/node_modules .
+cd $inputDir
+
 npm run integration -- https://${hostname}.${domain}/

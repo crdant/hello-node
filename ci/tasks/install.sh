@@ -63,8 +63,8 @@ fi
 version=`cat $versionFile`
 artifactName="${artifactId}-${version}.${packaging}"
 
-cd $inputDir
 mv ${moduleCache}/node_modules .
+cd $inputDir
 
 echo Creating tarball...
 tar -czf ../$outputDir/$artifactName *.js package.json node_modules
