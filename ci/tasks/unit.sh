@@ -32,7 +32,7 @@ if [ ! -d "$moduleCache" ]; then
   error_and_exit "missing module cache directory: $moduleCache"
 fi
 
-mv ${moduleCache}/node_modules .
+mv ${moduleCache}/node_modules ${inputDir}
 cd $inputDir
 npm install
 npm run test

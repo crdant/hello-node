@@ -63,7 +63,7 @@ fi
 version=`cat $versionFile`
 artifactName="${artifactId}-${version}.${packaging}"
 
-mv ${moduleCache}/node_modules .
+mv ${moduleCache}/node_modules ${inputDir}
 cd $inputDir
 
 echo Creating tarball...
