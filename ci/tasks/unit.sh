@@ -34,5 +34,5 @@ fi
 
 cd $inputDir
 mv ${moduleCache}/node_modules .
-npm install 
+npm install
 npm run test
