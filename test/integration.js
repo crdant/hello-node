@@ -12,18 +12,17 @@ var url = process.argv[2]
 const agent = new https.Agent({
   rejectUnauthorized: false
 });
-console.log(agent);
-// 
-// axios.get(url, { httpsAgent: agent })
-//   .then(function (response) {
-//     console.log("Got response: " + response.status);
-//     console.log("Got data: " + response.data);
-//
-//     if ( response.data != "Hello World\n") {
-//       process.exit(-1);
-//     }
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//     process.exit(-1);
-//   });
+
+axios.get(url, { httpsAgent: agent })
+  .then(function (response) {
+    console.log("Got response: " + response.status);
+    console.log("Got data: " + response.data);
+
+    if ( response.data != "Hello World\n") {
+      process.exit(-1);
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+    process.exit(-1);
+  });
