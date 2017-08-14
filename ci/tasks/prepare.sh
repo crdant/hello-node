@@ -4,6 +4,7 @@ baseName="hello-node"
 
 inputDir=     # required
 outputDir=    # required
+manifestFile= # required
 packaging= # optional
 
 while [ $# -gt 0 ]; do
@@ -14,6 +15,10 @@ while [ $# -gt 0 ]; do
       ;;
     -o | --output-dir )
       outputDir=$2
+      shift
+      ;;
+    -f | --manifest )
+      manifestFile=$2
       shift
       ;;
     -p | --packaging )
@@ -38,8 +43,8 @@ if [ ! -d "$outputDir" ]; then
   exit 1
 fi
 
-if [ ! -f "$inputManifest" ]; then
-  error_and_exit "missing input manifest: $inputManifest"
+if [ ! -f "$manifestFile" ]; then
+  error_and_exit "missing input manifest: $manifestFile"
 fi
 
 if [ -z "$packaging" ]; then
@@ -49,6 +54,8 @@ fi
 package=`find $inputDir -name "*.${packaging}"`
 echo "Extracting application from ${package} to ${outputDir}"
 tar -C ${outputDir} -xzf ${package}
+cp ${manifestFile} ${outputDir}
+
 ls ${outputDir}
 
 echo "Finished"
