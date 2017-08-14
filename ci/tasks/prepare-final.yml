@@ -18,7 +18,7 @@ outputs:
 run:
   path: source/ci/tasks/prepare.sh
   args: [
-    --input-dir, candiate-release,
+    --input-dir, candidate-release,
     --output-dir, prepared,
     --manifest, source/manifest.yml,
     --packaging, tgz
