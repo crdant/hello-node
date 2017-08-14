@@ -9,16 +9,16 @@ image_resource:
 
 inputs:
   - name: source
+  - name: candidate-release
   - name: version
 
 outputs:
-  - name: release
+  - name: prepared
 
 run:
-  path: source/ci/tasks/release.sh
+  path: source/ci/tasks/prepare.sh
   args: [
-    --input-dir, prepare-final,
-    --output-dir, release,
-    --version-file, version/number,
+    --input-dir, final-release,
+    --output-dir, prepared,
     --packaging, tgz
   ]
