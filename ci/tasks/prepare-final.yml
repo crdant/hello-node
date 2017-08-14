@@ -9,7 +9,7 @@ image_resource:
 
 inputs:
   - name: source
-  - name: candidate-release
+  - name: final-release
   - name: version
 
 outputs:
