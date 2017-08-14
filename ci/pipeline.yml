@@ -29,14 +29,16 @@ jobs:
         passed: [ build ]
       - get: version
         passed: [ build ]
-      - task: prepare-integration
+      - tasks: prepare
         file: source/ci/tasks/prepare-integration.yml
-        params:
-          CF_HOST: ((cf-integration-host))
-          CF_DOMAIN: ((cf-integration-domain))
       - put: cf-integration
         params:
-          manifest: prepare-integration/manifest.yml
+          manifest: prepared/manifest.yml
+      - put: cf-route-integration
+        params:
+          create: ((cf-integration-host)).((cf-integration-domain))
+          map: ((cf-integration-host)).((cf-integration-domain))
+          application: ((application-name))
       - task: integration-test
         file: source/ci/tasks/integration.yml
         params:
@@ -54,11 +56,8 @@ jobs:
         passed: [ integration-test ]
       - get: version
         params: { bump: final }
-      - task: prepare-final
+      - task: prepare
         file: source/ci/tasks/prepare-final.yml
-        params:
-          CF_HOST: ((cf-production-host))
-          CF_DOMAIN: ((cf-production-domain))
       - task: release
         file: source/ci/tasks/release.yml
       - put: final-release
@@ -109,13 +108,18 @@ resources:
 
   - name: cf-integration
     type: cf
-    source:
+    source: &cf-integration-source
       api: ((cf-integration-api))
       username: ((cf-integration-username))
       password: ((cf-integration-password))
       organization: ((cf-integration-org))
       space: ((cf-integration-space))
       skip_cert_check: ((cf-integration-skip-cert))
+
+  - name: cf-integration-route
+    type: cf-route
+    source:
+      <<: *cf-integration-source
 
   - name: final-release
     type: s3
@@ -130,7 +134,7 @@ resources:
 
   - name: cf-production
     type: cf
-    source:
+    source: &cf-production-source
       api: ((cf-production-api))
       username: ((cf-production-username))
       password: ((cf-production-password))
@@ -138,8 +142,18 @@ resources:
       space: ((cf-production-space))
       skip_cert_check: ((cf-production-skip-cert))
 
+  - name: cf-prodution-route
+    type: cf-route
+    source:
+      <<: *cf-production-source
+
 resource_types:
   - name: npm-cache
     type: docker-image
     source:
       repository: ymedlop/npm-cache-resource
+
+  - name: cf-route
+    type: docker-image
+    source:
+      repository: crdant/cf-route-resource
