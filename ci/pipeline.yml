@@ -29,16 +29,18 @@ jobs:
         passed: [ build ]
       - get: version
         passed: [ build ]
-      - tasks: prepare
+      - task: prepare
         file: source/ci/tasks/prepare-integration.yml
       - put: cf-integration
         params:
           manifest: prepared/manifest.yml
-      - put: cf-route-integration
+      - put: cf-integration-route
         params:
-          create: ((cf-integration-host)).((cf-integration-domain))
-          map: ((cf-integration-host)).((cf-integration-domain))
-          application: ((application-name))
+          create:
+          - ((cf-integration-host)).((cf-integration-domain))
+          map:
+          - ((cf-integration-host)).((cf-integration-domain))
+          application: ((application))
       - task: integration-test
         file: source/ci/tasks/integration.yml
         params:
@@ -62,11 +64,50 @@ jobs:
         file: source/ci/tasks/release.yml
       - put: final-release
         params: { file: release/((application))-*.tgz }
+      - put: cf-production-name
+        params:
+          current: ((application))
+          new: ((application))-venerable
       - put: cf-production
         params:
-          manifest: prepare-final/manifest.yml
+          manifest: prepared/manifest.yml
+      - put: cf-production-route
+        params:
+          create:
+          - ((cf-production-host)).((cf-production-domain))
+          map:
+          - ((cf-production-host)).((cf-production-domain))
+          - ((cf-production-host))-new.((cf-production-domain))
+          application: ((application))
       - put: version
         params: { file: version/number }
+
+  - name: validate-it
+    serial_groups: [ version ]
+    plan:
+      - get: source
+        passed: [ ship-it ]
+      - get: node-modules
+        passed: [ ship-it ]
+      - get: version
+        passed: [ ship-it ]
+        trigger: true
+      - task: integration-test
+        file: source/ci/tasks/integration.yml
+        params:
+          CF_HOST: ((cf-production-host))-new
+          CF_DOMAIN: ((cf-integration-domain))
+      - put: cf-production-route
+        params:
+          unmap:
+          - ((cf-production-host)).((cf-production-domain))
+          application: ((application))-venerable
+      - put: cf-production-route
+        params:
+          unmap:
+          - ((cf-production-host))-new.((cf-production-domain))
+          application: ((application))
+
 
 resources:
   - name: source
@@ -142,8 +183,13 @@ resources:
       space: ((cf-production-space))
       skip_cert_check: ((cf-production-skip-cert))
 
-  - name: cf-prodution-route
+  - name: cf-production-route
     type: cf-route
+    source:
+      <<: *cf-production-source
+
+  - name: cf-production-name
+    type: cf-rename
     source:
       <<: *cf-production-source
 
@@ -157,3 +203,8 @@ resource_types:
     type: docker-image
     source:
       repository: crdant/cf-route-resource
+
+  - name: cf-rename
+    type: docker-image
+    source:
+      repository: crdant/cf-rename-resource

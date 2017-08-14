@@ -1,6 +1,6 @@
 application: "hello-node"
 github-uri: "https://github.com/crdant/hello-node"
-github-branch: master
+github-branch: blue-green
 s3-region: "us-west-2"
 s3-endpoint: s3-us-west-2.amazonaws.com
 s3-bucket-version: hello-node-releases
