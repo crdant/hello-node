@@ -64,6 +64,9 @@ jobs:
         file: source/ci/tasks/release.yml
       - put: final-release
         params: { file: release/((application))-*.tgz }
+      - put: cf-production-delete
+        params:
+          application: ((application))-venerable
       - put: cf-production-name
         params:
           current: ((application))
@@ -99,6 +102,12 @@ jobs:
         params:
           CF_HOST: ((cf-production-host))-new
           CF_DOMAIN: ((cf-integration-domain))
+    on_failure:
+      put: cf-production-route
+      params:
+        unmap:
+          - ((cf-production-host)).((cf-production-domain))
+        application: ((application))
 
   - name: cutover
     serial_groups: [ version ]
@@ -116,9 +125,25 @@ jobs:
           unmap:
           - ((cf-production-host))-new.((cf-production-domain))
           application: ((application))
+
+  - name: rollback
+    serial_groups: [ version ]
+    plan:
+      - get: final-release
+        passed: [ validate-it ]
+      - put: cf-production-route
+        params:
+          unmap:
+          - ((cf-production-host)).((cf-production-domain))
+          application: ((application))
       - put: cf-production-delete
         params:
-          application: ((application))-venerable
+          application: ((application))
+      - put: cf-production-name
+        params:
+          current: ((application))-venerable
+          new: ((application))
+
 
 resources:
   - name: source
