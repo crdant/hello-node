@@ -89,14 +89,23 @@ jobs:
         passed: [ ship-it ]
       - get: node-modules
         passed: [ ship-it ]
-      - get: version
+      - get: final-release
         passed: [ ship-it ]
         trigger: true
+      - get: version
+        passed: [ ship-it ]
       - task: integration-test
         file: source/ci/tasks/integration.yml
         params:
           CF_HOST: ((cf-production-host))-new
           CF_DOMAIN: ((cf-integration-domain))
+
+  - name: cutover
+    serial_groups: [ version ]
+    plan:
+      - get: final-release
+        passed: [ validate-it ]
+        trigger: true
       - put: cf-production-route
         params:
           unmap:
@@ -107,7 +116,9 @@ jobs:
           unmap:
           - ((cf-production-host))-new.((cf-production-domain))
           application: ((application))
-
+      - put: cf-production-delete
+        params:
+          application: ((application))-venerable
 
 resources:
   - name: source
@@ -193,6 +204,11 @@ resources:
     source:
       <<: *cf-production-source
 
+  - name: cf-production-delete
+    type: cf-delete
+    source:
+      <<: *cf-production-source
+
 resource_types:
   - name: npm-cache
     type: docker-image
@@ -208,3 +224,8 @@ resource_types:
     type: docker-image
     source:
       repository: crdant/cf-rename-resource
+
+  - name: cf-delete
+    type: docker-image
+    source:
+      repository: crdant/cf-delete-resource
